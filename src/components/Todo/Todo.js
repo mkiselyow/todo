@@ -6,6 +6,7 @@ import AppHeader from '../AppHeader/AppHeader';
 import SearchPanel from '../SearchPanel/SearchPanel';
 import TodoList from '../TodoList/TodoList';
 import ItemStatusFilter from '../ItemStatusFilter/ItemStatusFilter';
+import InputNewItem from '../InputNewItem/InputNewItem';
 
 export default class Todo extends Component {
   constructor() {
@@ -45,6 +46,7 @@ export default class Todo extends Component {
           todos={todoData}
           onClickDelete={this.onClickDelete}
         />
+        <InputNewItem/>
       </div>
     )
   }
