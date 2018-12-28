@@ -27,14 +27,18 @@ export default class Todo extends Component {
     };
     this.onClickAdd = (newItemLabel) => {
       this.setState(({todoData}) => {
-        const newItemId = todoData.length;
+        let newItemId = todoData.length;
+        const newItem = {
+          label: newItemLabel,
+          important: false,
+          id: ++newItemId
+        };
 
         return {
-          todoData: todoData.push({
-            label: newItemLabel,
-            important: false,
-            id: newItemId
-          })
+          todoData: [
+            ...todoData,
+            newItem
+          ]
         }
       })
     };

@@ -1,22 +1,22 @@
-import React from 'react';
+import React, {Component} from 'react';
 
 import './InputNewItem.css';
 
-const InputNewItem = () => {
-  const createItem = () => {
-    console.log('create Item!');
-    console.log(searchInput.value);
-  };
-  let searchInput;
+export default class InputNewItem extends Component {
+  constructor() {
+    super();
+    this.state = {
+      searchInput: ""
+    };
+  }
 
-  return (
-    <input type="text"
-           className="form-control mt-3"
-           placeholder="Enter new todo name"
-           ref={(input) => { searchInput = input }}
-           onChange={createItem.bind(this, this)}
-    />
-  )
-};
-
-export default InputNewItem;
+  render() {
+    return (
+      <input type="text"
+             className="form-control mt-3"
+             placeholder="Enter new todo name"
+             onChange={() => this.props.onClickAdd("Ssssssssss")}
+      />
+    )
+  }
+}
