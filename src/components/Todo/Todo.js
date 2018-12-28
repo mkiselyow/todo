@@ -25,6 +25,19 @@ export default class Todo extends Component {
         }
       })
     };
+    this.onClickAdd = (newItemLabel) => {
+      this.setState(({todoData}) => {
+        const newItemId = todoData.length;
+
+        return {
+          todoData: todoData.push({
+            label: newItemLabel,
+            important: false,
+            id: newItemId
+          })
+        }
+      })
+    };
   }
 
   render() {
@@ -46,7 +59,9 @@ export default class Todo extends Component {
           todos={todoData}
           onClickDelete={this.onClickDelete}
         />
-        <InputNewItem/>
+        <InputNewItem
+          onClickAdd={this.onClickAdd}
+        />
       </div>
     )
   }
