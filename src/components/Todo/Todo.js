@@ -11,13 +11,15 @@ import InputNewItem from '../InputNewItem/InputNewItem';
 export default class Todo extends Component {
   constructor() {
     super();
+
     this.state = {
       todoData : [
-        {label: 'Drink Coffee', important: false, id: 1},
-        {label: 'Make Awesome App', important: true, id: 2},
-        {label: 'Have a lunch', important: false, id: 3}
+        {label: 'Drink Coffee', important: false, id: 1, done: false},
+        {label: 'Make Awesome App', important: true, id: 2, done: false},
+        {label: 'Have a lunch', important: false, id: 3, done: false}
       ]
     };
+
     this.onClickDelete = (id) => {
       this.setState(({todoData}) => {
         return {
@@ -25,6 +27,7 @@ export default class Todo extends Component {
         }
       })
     };
+
     this.onClickAdd = (newItemLabel) => {
       this.setState(({todoData}) => {
         let newItemId = todoData.length;
@@ -39,6 +42,44 @@ export default class Todo extends Component {
             ...todoData,
             newItem
           ]
+        }
+      })
+    };
+
+    this.onClickImportant = (id) => {
+      this.setState(({todoData}) => {
+        const listItemIndex = todoData.findIndex( ({id: itemId}) => itemId === id);
+        const updatedListItem = {...(todoData[listItemIndex])};
+        updatedListItem.important = !updatedListItem.important;
+        const listItemsBefore = todoData.slice(0, (listItemIndex));
+        const listItemsAfter = todoData.slice(listItemIndex+1);
+        const newTodoData = [
+          ...listItemsBefore,
+          updatedListItem,
+          ...listItemsAfter
+        ];
+
+        return {
+          todoData: newTodoData
+        }
+      })
+    };
+
+    this.onMarkDone = (id) => {
+      this.setState(({todoData}) => {
+        const listItemIndex = todoData.findIndex( ({id: itemId}) => itemId === id);
+        const updatedListItem = {...(todoData[listItemIndex])};
+        updatedListItem.done = !updatedListItem.done;
+        const listItemsBefore = todoData.slice(0, (listItemIndex));
+        const listItemsAfter = todoData.slice(listItemIndex+1);
+        const newTodoData = [
+          ...listItemsBefore,
+          updatedListItem,
+          ...listItemsAfter
+        ];
+
+        return {
+          todoData: newTodoData
         }
       })
     };
@@ -62,6 +103,8 @@ export default class Todo extends Component {
         <TodoList
           todos={todoData}
           onClickDelete={this.onClickDelete}
+          onClickImportant={this.onClickImportant}
+          onMarkDone={this.onMarkDone}
         />
         <InputNewItem
           onClickAdd={this.onClickAdd}

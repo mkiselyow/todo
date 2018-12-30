@@ -3,13 +3,15 @@ import React, { Component } from 'react';
 import './TodoListItem.css';
 
 export default class TodoListItem extends Component {
-  constructor( {done = false, important = false} ) {
+  constructor( {done = false, important = false, onClickImportant, onMarkDone} ) {
     super();
     this.state = {
       done: done,
       important: important
     };
+
     this.onLabelClick = () => {
+      onMarkDone();
       console.log(`Done: ${this.props.label}`);
       this.setState(({ done }) => {
         return {
@@ -17,7 +19,9 @@ export default class TodoListItem extends Component {
         };
       });
     };
+
     this.onImportantClick = () => {
+      onClickImportant();
       this.setState(({ important }) => {
         return {
           important: !important
