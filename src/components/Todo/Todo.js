@@ -12,11 +12,20 @@ export default class Todo extends Component {
   constructor() {
     super();
 
+    this.createTodoItem = (label, important = false) => {
+      return {
+        label: label,
+        important: important,
+        id: parseInt((Math.random()*1000000).toFixed(0), 10),
+        done: false
+      }
+    };
+
     this.state = {
       todoData : [
-        {label: 'Drink Coffee', important: false, id: 1, done: false},
-        {label: 'Make Awesome App', important: true, id: 2, done: false},
-        {label: 'Have a lunch', important: false, id: 3, done: false}
+        this.createTodoItem('Drink Coffee'),
+        this.createTodoItem('Make Awesome App', true),
+        this.createTodoItem('Have a lunch')
       ]
     };
 
@@ -30,17 +39,10 @@ export default class Todo extends Component {
 
     this.onClickAdd = (newItemLabel) => {
       this.setState(({todoData}) => {
-        let newItemId = todoData.length;
-        const newItem = {
-          label: newItemLabel,
-          important: false,
-          id: ++newItemId
-        };
-
         return {
           todoData: [
             ...todoData,
-            newItem
+            this.createTodoItem(newItemLabel)
           ]
         }
       })
