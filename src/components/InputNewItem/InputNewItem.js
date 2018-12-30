@@ -40,7 +40,7 @@ export default class InputNewItem extends Component {
       <input type="text"
              value={this.state.textInput}
              className="form-control mt-3"
-             placeholder="Enter new todo name"
+             placeholder="What needs to be done?"
              onKeyPress={this.handleKeyPress}
       />
     )
