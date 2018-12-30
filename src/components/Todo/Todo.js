@@ -51,8 +51,10 @@ export default class Todo extends Component {
     this.onClickImportant = (id) => {
       this.setState(({todoData}) => {
         const listItemIndex = todoData.findIndex( ({id: itemId}) => itemId === id);
-        const updatedListItem = {...(todoData[listItemIndex])};
-        updatedListItem.important = !updatedListItem.important;
+        const updatedListItem = {
+          ...(todoData[listItemIndex]),
+          important: !todoData[listItemIndex].important
+        };
         const listItemsBefore = todoData.slice(0, (listItemIndex));
         const listItemsAfter = todoData.slice(listItemIndex+1);
         const newTodoData = [
@@ -70,8 +72,10 @@ export default class Todo extends Component {
     this.onMarkDone = (id) => {
       this.setState(({todoData}) => {
         const listItemIndex = todoData.findIndex( ({id: itemId}) => itemId === id);
-        const updatedListItem = {...(todoData[listItemIndex])};
-        updatedListItem.done = !updatedListItem.done;
+        const updatedListItem = {
+          ...(todoData[listItemIndex]),
+          done: !todoData[listItemIndex].done
+        };
         const listItemsBefore = todoData.slice(0, (listItemIndex));
         const listItemsAfter = todoData.slice(listItemIndex+1);
         const newTodoData = [
