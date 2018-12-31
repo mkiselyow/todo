@@ -90,7 +90,9 @@ export default class Todo extends Component {
         { loginBox }
         <AppHeader done={done} todo={todo}/>
         <div className="top-panel d-flex">
-          <SearchPanel/>
+          <SearchPanel
+            onClickAdd={this.onClickAdd}
+          />
           <ItemStatusFilter/>
         </div>
         <TodoList
