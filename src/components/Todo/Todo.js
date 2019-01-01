@@ -27,22 +27,21 @@ export default class Todo extends Component {
         this.createTodoItem('Make Awesome App', true),
         this.createTodoItem('Have a lunch')
       ],
-      filter : ''
+      filterLabel : '',
+      filterStatus : ''
     };
 
     this.handleChangeInput = (e, stateField) => {
-      this.onTextInput(e.target.value, stateField);
+      this.updateStateProperty(e.target.value, stateField);
     };
 
-    this.onTextInput = (newValue, stateField) => {
+    this.updateStateProperty = (newValue, stateField) => {
       this.setState(
         () => {
           return {
             [stateField]: newValue
           }
-        },
-        () => console.log(this.state[stateField])
-        /*this.props.onClickAdd(this.state.value)*/);
+        });
     };
 
     this.onClickDelete = (id) => {
@@ -92,13 +91,27 @@ export default class Todo extends Component {
     this.onClickImportant = (id) => {
       this.toggleProperty(id, 'important');
     };
+
+    this.filteredTodoData = () => {
+      const {todoData, filterLabel, filterStatus} = this.state;
+
+      return todoData.filter(({label, done}) => {
+        let [filterLabelResult, filterStatusResult] = [true, true];
+
+        if (filterLabel) {
+          filterLabelResult = new RegExp(filterLabel, "i").test(label)
+        }
+        if (filterStatus !== '') {
+          filterStatusResult = (done === filterStatus);
+        }
+
+        return filterLabelResult && filterStatusResult
+      });
+    }
   }
 
   render() {
-    const {todoData, filter} = this.state;
-    const filteredTodoData = filter
-      ? todoData.filter(({label}) => new RegExp(filter, "i").test(label))
-      : todoData;
+    const filteredTodoData = this.filteredTodoData();
     const isLoggedIn = true;
     const loginBox = <span>{isLoggedIn ? 'Log in please' : 'Hello User'}</span>;
     const done = filteredTodoData.filter((item) => item.done === true).length;
@@ -110,9 +123,11 @@ export default class Todo extends Component {
         <AppHeader done={done} todo={todo}/>
         <div className="top-panel d-flex">
           <SearchPanel
-            handleChangeInput={(e) => this.handleChangeInput(e, 'filter')}
+            handleChangeInput={(e) => this.handleChangeInput(e, 'filterLabel')}
           />
-          <ItemStatusFilter/>
+          <ItemStatusFilter
+            updateStateProperty={(e) => this.updateStateProperty(e, 'filterStatus')}
+          />
         </div>
         <TodoList
           todos={filteredTodoData}
