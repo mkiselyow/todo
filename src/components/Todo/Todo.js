@@ -26,7 +26,25 @@ export default class Todo extends Component {
         this.createTodoItem('Drink Coffee'),
         this.createTodoItem('Make Awesome App', true),
         this.createTodoItem('Have a lunch')
-      ]
+      ],
+      filter : ''
+    };
+
+    this.handleChangeInput = (e, stateField) => {
+      if (e.target.value) {
+        this.onTextInput(e.target.value, stateField);
+      }
+    };
+
+    this.onTextInput = (newValue, stateField) => {
+      this.setState(
+        () => {
+          return {
+            [stateField]: newValue
+          }
+        },
+        () => console.log(this.state[stateField])
+        /*this.props.onClickAdd(this.state.value)*/);
     };
 
     this.onClickDelete = (id) => {
@@ -91,7 +109,7 @@ export default class Todo extends Component {
         <AppHeader done={done} todo={todo}/>
         <div className="top-panel d-flex">
           <SearchPanel
-            onClickAdd={this.onClickAdd}
+            handleChangeInput={(e) => this.handleChangeInput(e, 'filter')}
           />
           <ItemStatusFilter/>
         </div>
