@@ -28,7 +28,7 @@ export default class InputNewItem extends Component {
   };
 
   clearInput = () => {
-    this.setState(({textInput}) => {
+    this.setState(() => {
       return {
         textInput: ""
       }

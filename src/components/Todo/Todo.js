@@ -31,9 +31,7 @@ export default class Todo extends Component {
     };
 
     this.handleChangeInput = (e, stateField) => {
-      if (e.target.value) {
-        this.onTextInput(e.target.value, stateField);
-      }
+      this.onTextInput(e.target.value, stateField);
     };
 
     this.onTextInput = (newValue, stateField) => {
@@ -97,11 +95,14 @@ export default class Todo extends Component {
   }
 
   render() {
-    let {todoData} = this.state;
+    const {todoData, filter} = this.state;
+    const filteredTodoData = filter
+      ? todoData.filter(({label}) => new RegExp(filter, "i").test(label))
+      : todoData;
     const isLoggedIn = true;
     const loginBox = <span>{isLoggedIn ? 'Log in please' : 'Hello User'}</span>;
-    const done = todoData.filter((item) => item.done === true).length;
-    const todo = todoData.length - done;
+    const done = filteredTodoData.filter((item) => item.done === true).length;
+    const todo = filteredTodoData.length - done;
 
     return (
       <div className="todo-app">
@@ -114,7 +115,7 @@ export default class Todo extends Component {
           <ItemStatusFilter/>
         </div>
         <TodoList
-          todos={todoData}
+          todos={filteredTodoData}
           onClickDelete={this.onClickDelete}
           onClickImportant={this.onClickImportant}
           onMarkDone={this.onMarkDone}
