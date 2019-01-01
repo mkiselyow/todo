@@ -111,11 +111,12 @@ export default class Todo extends Component {
   }
 
   render() {
+    const {todoData} = this.state;
     const filteredTodoData = this.filteredTodoData();
     const isLoggedIn = true;
     const loginBox = <span>{isLoggedIn ? 'Log in please' : 'Hello User'}</span>;
-    const done = filteredTodoData.filter((item) => item.done === true).length;
-    const todo = filteredTodoData.length - done;
+    const done = todoData.filter((item) => item.done === true).length;
+    const todo = todoData.length - done;
 
     return (
       <div className="todo-app">

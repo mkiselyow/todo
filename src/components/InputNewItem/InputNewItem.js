@@ -14,17 +14,11 @@ export default class InputNewItem extends Component {
     if (e.key === 'Enter') {
       this.props.onClickAdd(this.state.textInput);
       this.clearInput();
-    } else {
-      this.onTextInput(e.key);
     }
   };
 
-  onTextInput = (newSymbol) => {
-    this.setState(({textInput}) => {
-      return {
-        textInput: (textInput + newSymbol)
-      }
-    })
+  handleOnChange = (e) => {
+    this.setState({textInput: e.target.value});
   };
 
   clearInput = () => {
@@ -41,6 +35,7 @@ export default class InputNewItem extends Component {
              value={this.state.textInput}
              className="form-control mt-3"
              placeholder="What needs to be done?"
+             onChange={this.handleOnChange}
              onKeyPress={this.handleKeyPress}
       />
     )
