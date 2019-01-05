@@ -3,17 +3,6 @@ import React, { Component } from 'react';
 import './ItemStatusFilter.css';
 
 export default class ItemStatusFilter extends Component {
-  constructor() {
-    super();
-    this.state = {
-      activeBtn: ''
-    };
-  };
-
-  handleBtnPress = (btnName) => {
-    this.setState({activeBtn: btnName})
-  };
-
   buttons = [
     { name: '', label: 'All' },
     { name: false, label: 'Active' },
@@ -22,14 +11,15 @@ export default class ItemStatusFilter extends Component {
 
   render() {
     const buttons = this.buttons.map(({name, label}) => {
-      const className = (this.state.activeBtn === name)
+      const className = (this.props.filterStatus === name)
         ? 'btn btn-info'
         : 'btn btn-outline-secondary';
 
       return (
         <button
           type="button"
-          onClick={() => {this.handleBtnPress(name); this.props.updateStateProperty(name)}}
+          key={name}
+          onClick={() => {this.props.updateStateProperty(name)}}
           className={className}>{label}</button>
         );
     });
